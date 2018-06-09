@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace ListDataTemplate
@@ -6,9 +7,13 @@ namespace ListDataTemplate
     public class RegularPerson : INotifyPropertyChanged
     {
         private int _statusPerson;
+        private string _waitTime;
+        private DateTime _startTime;
+        private string _room;
+        private int _waitTimeStatus;
         public int CardColor { get; set; }
 
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; }
 
         public int TypePerson { get; set; }
 
@@ -22,9 +27,45 @@ namespace ListDataTemplate
             }
         }
 
-        public string Room { get; set; }
+        public string Room
+        {
+            get => _room;
+            set
+            {
+                _room = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string WaitTime { get; set; }
+        public string WaitTime
+        {
+            get => _waitTime;
+            set
+            {
+                _waitTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int WaitTimeStatus
+        {
+            get => _waitTimeStatus;
+            set
+            {
+                _waitTimeStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime StartTime
+        {
+            get => _startTime;
+            set
+            {
+                _startTime = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
