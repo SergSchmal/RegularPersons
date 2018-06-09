@@ -17,13 +17,12 @@ namespace ListDataTemplate
         private ObservableCollection<RegularPerson> _regularPersons;
         private ObservableCollection<RegularPerson> _regularPatients;
         private ObservableCollection<RegularPerson> _regularEscorts;
-        private readonly AddRegularPerson _addRegularPerson;
+        private readonly AddRegularPerson _addRegularPerson = new AddRegularPerson();
 
         public MainViewModel()
         {
             CreateList();
             DispatcherTimerSetup();
-            _addRegularPerson = new AddRegularPerson(this);
         }
 
         public ObservableCollection<RegularPerson> RegularPersons
