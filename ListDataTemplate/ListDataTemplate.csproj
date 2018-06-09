@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddRegularPerson.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="RegularPerson.cs" />
     <Compile Include="RelayCommand.cs" />

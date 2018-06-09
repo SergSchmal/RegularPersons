@@ -14,15 +14,16 @@ namespace ListDataTemplate
         private DateTime _currentTime;
         private string _patientsTabHeader;
         private string _escortsTabHeader;
-        private int _newCardColor;
         private ObservableCollection<RegularPerson> _regularPersons;
         private ObservableCollection<RegularPerson> _regularPatients;
         private ObservableCollection<RegularPerson> _regularEscorts;
+        private readonly AddRegularPerson _addRegularPerson;
 
         public MainViewModel()
         {
             CreateList();
             DispatcherTimerSetup();
+            _addRegularPerson = new AddRegularPerson(this);
         }
 
         public ObservableCollection<RegularPerson> RegularPersons
@@ -172,18 +173,7 @@ namespace ListDataTemplate
 
         private void AddPatientExecute()
         {
-            var regularPersons = RegularPersons.ToList();
-            _newCardColor += 1;
-            var cardNumber = Convert.ToInt16(regularPersons.Last().CardNumber) + 127;
-            regularPersons.Add(new RegularPerson
-            {
-                CardColor = _newCardColor,
-                CardNumber = $"{cardNumber}",
-                Room = "Wartezimmer",
-                TypePerson = 0,
-                StartTime = DateTime.Now,
-                WaitTime = "0:0 min."
-            });
+            var regularPersons = _addRegularPerson.AddPerson(RegularPersons.ToList(), 0);
             RegularPersons = new ObservableCollection<RegularPerson>(regularPersons);
             CreateCollections(regularPersons);
         }
@@ -192,18 +182,7 @@ namespace ListDataTemplate
 
         private void AddEscortExecute()
         {
-            var regularPersons = RegularPersons.ToList();
-            _newCardColor += 1;
-            var cardNumber = Convert.ToInt16(regularPersons.Last().CardNumber) + 221;
-            regularPersons.Add(new RegularPerson
-            {
-                CardColor = _newCardColor,
-                CardNumber = $"{cardNumber}",
-                Room = "Wartezimmer",
-                TypePerson = 1,
-                StartTime = DateTime.Now,
-                WaitTime = "0:0 min."
-            });
+            var regularPersons = _addRegularPerson.AddPerson(RegularPersons.ToList(), 1);
             RegularPersons = new ObservableCollection<RegularPerson>(regularPersons);
             CreateCollections(regularPersons);
         }
