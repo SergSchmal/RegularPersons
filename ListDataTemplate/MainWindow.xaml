@@ -3,14 +3,149 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ListDataTemplate"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="ItemTemplate">
+            <Grid>
+                <Rectangle Margin="2">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                    <GradientStop Offset="0" Color="#AAFFFFFF" />
+                                    <GradientStop Offset="1" Color="transparent" />
+                                </GradientStopCollection>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle
+                        x:Name="PersonStatus"
+                        Grid.Column="0"
+                        Width="Auto"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CardColor}" Value="0">
+                                        <Setter Property="Fill" Value="Red" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CardColor}" Value="1">
+                                        <Setter Property="Fill" Value="Green" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CardColor}" Value="2">
+                                        <Setter Property="Fill" Value="Blue" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CardColor}" Value="3">
+                                        <Setter Property="Fill" Value="Orange" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CardColor}" Value="4">
+                                        <Setter Property="Fill" Value="Aqua" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <Label
+                        x:Name="CardNumber"
+                        Grid.Column="1"
+                        Width="Auto"
+                        Height="30"
+                        Margin="20,0"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right"
+                        FontFamily="Segoe UI"
+                        FontSize="12"
+                        VerticalContentAlignment="Center"
+                        Content="{Binding CardNumber}"/>
+                    <Label
+                        x:Name="TypePerson"
+                        Grid.Column="2"
+                        Width="Auto"
+                        Height="30"
+                        Margin="10,0"
+                        Content="{Binding TypePerson}"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="12"/>
+                    <Label
+                        x:Name="Room"
+                        Grid.Column="3"
+                        Width="Auto"
+                        Height="30"
+                        Margin="10,0"
+                        Content="{Binding Room}"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="12"/>
+                    <Label
+                        x:Name="WaitTime"
+                        Grid.Column="4"
+                        Width="Auto"
+                        Height="30"
+                        Margin="10,0"
+                        Content="{Binding WaitTime}"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Right"
+                        FontFamily="Segoe UI"
+                        FontSize="12"/>
+                    <Label
+                        x:Name="StatusPerson"
+                        Grid.Column="5"
+                        Width="Auto"
+                        Height="30"
+                        Margin="10,0"
+                        Content="{Binding StatusPerson}"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Right"
+                        FontFamily="Segoe UI"
+                        FontSize="12"/>
+                    <Button
+                        x:Name="IsActive"
+                        Grid.Column="6"
+                        Margin="2"
+                        Width="100"
+                        Height="25"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding ElementName=ListView1, Path=DataContext.CallCommand}"
+                        CommandParameter="{Binding}"/>
+                </Grid>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding TypePerson}" Value="0">
+                    <Setter TargetName="TypePerson" Property="Content" Value="Patient" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding TypePerson}" Value="1">
+                    <Setter TargetName="TypePerson" Property="Content" Value="Escort" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding StatusPerson}" Value="0">
+                    <Setter TargetName="StatusPerson" Property="Content" Value="Wait" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding StatusPerson}" Value="1">
+                    <Setter TargetName="StatusPerson" Property="Content" Value="Called" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        <ListView ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ItemsSource="{Binding ListSource}">
+        <ListView x:Name="ListView1" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ItemsSource="{Binding RegularPersons}"
+                  ItemTemplate="{StaticResource ItemTemplate}"
+                  Margin="20">
 
         </ListView>
-        
     </Grid>
 </Window>
